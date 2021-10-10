@@ -1,0 +1,16 @@
+{
+  "name": "parser",
+  "version": "1.0.0",
+  "description": "parsing json",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Santhosh Kumar D",
+  "license": "ISC",
+  "dependencies": {
+    "bfj": "^7.0.2",
+    "bfs": "^1.0.0",
+    "fs": "0.0.1-security"
+  }
+}
