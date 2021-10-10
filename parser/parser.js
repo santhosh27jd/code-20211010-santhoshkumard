@@ -2,11 +2,13 @@ const bfj = require('bfj'); // For Reading large file
 const fs = require('fs'); // Using file stream
 
 const stream = fs.createReadStream('./MOCDATA.json');
+//const stream = fs.createReadStream('./large-file.json');
 
 bfj.match(stream, (key, value, depth) => depth === 0, { ndjson: true })
   .on('data', object => {
     // Performing BMI logic
     const allData = [];
+    var overweightcount = 0;
     object.map((mdata, key) => {
         const personMap = [];
         personMap["Gender"] = mdata.Gender;
@@ -25,6 +27,7 @@ bfj.match(stream, (key, value, depth) => depth === 0, { ndjson: true })
        }else if(bmical > 25 && bmical < 29.9){
            personMap["BMICategory"] = "Overweight";
            personMap["HealthRisk"] = "Enhanced risk";
+           overweightcount++;
        }else if(bmical > 30 && bmical < 34.9){
            personMap["BMICategory"] = "Moderately obese"; 
            personMap["HealthRisk"] = "Medium risk"; 
@@ -35,15 +38,10 @@ bfj.match(stream, (key, value, depth) => depth === 0, { ndjson: true })
            personMap["BMICategory"] = "Very Severely obese";
            personMap["HealthRisk"] = "Very High risk";
        }
+
        allData.push(personMap);
     });
     console.log(allData);
-    var overweightcount = 0;
-    allData.map((data,key) => {
-        if(data.BMICategory == 'Overweight'){
-            overweightcount++;
-        }
-    });
     console.log('Overweight count :: => '+overweightcount);
 
   })
